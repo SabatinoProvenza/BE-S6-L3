@@ -1,5 +1,9 @@
 package sabatinoprovenza.BE_S6_L3.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import sabatinoprovenza.BE_S6_L3.entities.Author;
 import sabatinoprovenza.BE_S6_L3.entities.Blog;
@@ -7,8 +11,6 @@ import sabatinoprovenza.BE_S6_L3.exceptions.NotFoundException;
 import sabatinoprovenza.BE_S6_L3.payloads.BlogPayload;
 import sabatinoprovenza.BE_S6_L3.repositories.AuthorsRepository;
 import sabatinoprovenza.BE_S6_L3.repositories.BlogsRepository;
-
-import java.util.List;
 
 @Service
 public class BlogsService {
@@ -36,7 +38,8 @@ public class BlogsService {
         return this.blogsRepository.save(newBlog);
     }
 
-    public List<Blog> findAll() {
-        return this.blogsRepository.findAll();
+    public Page<Blog> findAll(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return this.blogsRepository.findAll(pageable);
     }
 }
