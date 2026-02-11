@@ -31,7 +31,7 @@ public class Blog {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
-    public Blog(String categoria, String titolo, String contenuto, int tempoDiLettura, Author author) {
+    public Blog(String categoria, String titolo, String contenuto, int tempoDiLettura) {
         this.categoria = categoria;
         this.titolo = titolo;
         this.cover = "https://picsum.photos/200/300";
