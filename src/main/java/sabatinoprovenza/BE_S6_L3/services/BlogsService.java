@@ -12,6 +12,8 @@ import sabatinoprovenza.BE_S6_L3.payloads.BlogPayload;
 import sabatinoprovenza.BE_S6_L3.repositories.AuthorsRepository;
 import sabatinoprovenza.BE_S6_L3.repositories.BlogsRepository;
 
+import java.util.UUID;
+
 @Service
 public class BlogsService {
     private final BlogsRepository blogsRepository;
@@ -41,5 +43,9 @@ public class BlogsService {
     public Page<Blog> findAll(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return this.blogsRepository.findAll(pageable);
+    }
+
+    public Blog findById(UUID id) {
+        return this.blogsRepository.findById(id).orElseThrow(() -> new NotFoundException("Il blog con id: " + id + " non è stato trovato"));
     }
 }

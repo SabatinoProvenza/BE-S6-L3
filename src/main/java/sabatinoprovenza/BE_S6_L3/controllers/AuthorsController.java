@@ -7,6 +7,7 @@ import sabatinoprovenza.BE_S6_L3.payloads.AuthorPayload;
 import sabatinoprovenza.BE_S6_L3.services.AuthorsService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
@@ -26,5 +27,10 @@ public class AuthorsController {
     @GetMapping
     public List<Author> findAll() {
         return authorsService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Author findById(@PathVariable UUID id) {
+        return authorsService.findById(id);
     }
 }

@@ -24,6 +24,7 @@ public class ErrorsHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsPayload handleGeneric(Exception ex) {
+        ex.printStackTrace();
         return new ErrorsPayload("Errore generico del server!");
     }
 }

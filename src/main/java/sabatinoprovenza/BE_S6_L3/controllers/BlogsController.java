@@ -7,6 +7,8 @@ import sabatinoprovenza.BE_S6_L3.entities.Blog;
 import sabatinoprovenza.BE_S6_L3.payloads.BlogPayload;
 import sabatinoprovenza.BE_S6_L3.services.BlogsService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/blogs")
 public class BlogsController {
@@ -26,8 +28,13 @@ public class BlogsController {
     public Page<Blog> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "name") String orderBy
+            @RequestParam(defaultValue = "tempoDiLettura") String orderBy
     ) {
         return blogsService.findAll(page, size, orderBy);
+    }
+
+    @GetMapping("/{id}")
+    public Blog findById(@PathVariable UUID id) {
+        return blogsService.findById(id);
     }
 }
