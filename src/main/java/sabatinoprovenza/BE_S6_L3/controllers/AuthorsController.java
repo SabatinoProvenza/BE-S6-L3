@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sabatinoprovenza.BE_S6_L3.entities.Author;
 import sabatinoprovenza.BE_S6_L3.exceptions.ValidationException;
 import sabatinoprovenza.BE_S6_L3.payloads.AuthorPayload;
@@ -43,4 +44,11 @@ public class AuthorsController {
     public Author findById(@PathVariable UUID id) {
         return authorsService.findById(id);
     }
+
+    @PatchMapping("/{authorId}/avatar")
+    public Author uploadAvatar(@PathVariable UUID authorId,
+                               @RequestParam("profile_picture") MultipartFile file) {
+        return authorsService.uploadAvatar(file, authorId);
+    }
+
 }
