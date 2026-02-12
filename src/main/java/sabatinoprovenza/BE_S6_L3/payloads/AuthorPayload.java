@@ -1,15 +1,14 @@
 package sabatinoprovenza.BE_S6_L3.payloads;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
-@Getter
-@AllArgsConstructor
-public class AuthorPayload {
-    private String nome;
-    private String cognome;
-    private String email;
-    private LocalDate dataDiNascita;
+
+public record AuthorPayload(@NotBlank(message = "Il nome è obbligatorio") String nome,
+                            @NotBlank(message = "Il cognome è obbligatorio") String cognome,
+                            @Email(message = "Inserire un' email valida") @NotBlank(message = "L'email è obbligatoria") String email,
+                            LocalDate dataDiNascita) {
+
 }

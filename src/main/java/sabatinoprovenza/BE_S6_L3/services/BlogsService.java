@@ -26,14 +26,14 @@ public class BlogsService {
 
     public Blog saveBlog(BlogPayload payload) {
 
-        Author author = this.authorsRepository.findById(payload.getAuthorId())
-                .orElseThrow(() -> new NotFoundException("Autore con id " + payload.getAuthorId() + " non trovato"));
+        Author author = this.authorsRepository.findById(payload.authorId())
+                .orElseThrow(() -> new NotFoundException("Autore con id " + payload.authorId() + " non trovato"));
 
         Blog newBlog = new Blog(
-                payload.getCategoria(),
-                payload.getTitolo(),
-                payload.getContenuto(),
-                payload.getTempoDiLettura()
+                payload.categoria(),
+                payload.titolo(),
+                payload.contenuto(),
+                payload.tempoDiLettura()
         );
 
         newBlog.setAuthor(author);

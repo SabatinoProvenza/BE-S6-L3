@@ -1,8 +1,11 @@
 package sabatinoprovenza.BE_S6_L3.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sabatinoprovenza.BE_S6_L3.entities.Author;
+import sabatinoprovenza.BE_S6_L3.exceptions.ValidationException;
 import sabatinoprovenza.BE_S6_L3.payloads.AuthorPayload;
 import sabatinoprovenza.BE_S6_L3.services.AuthorsService;
 
@@ -20,7 +23,14 @@ public class AuthorsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Author saveAuthor(@RequestBody AuthorPayload payload) {
+    public Author saveAuthor(@RequestBody @Validated AuthorPayload payload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errorsList = validationResult.getAllErrors().stream()
+                    .map(err -> err.getDefaultMessage())
+                    .toList();
+
+            throw new ValidationException(errorsList);
+        }
         return authorsService.saveAuthor(payload);
     }
 

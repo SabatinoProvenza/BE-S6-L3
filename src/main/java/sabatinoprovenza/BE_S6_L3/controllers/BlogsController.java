@@ -2,11 +2,15 @@ package sabatinoprovenza.BE_S6_L3.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sabatinoprovenza.BE_S6_L3.entities.Blog;
+import sabatinoprovenza.BE_S6_L3.exceptions.ValidationException;
 import sabatinoprovenza.BE_S6_L3.payloads.BlogPayload;
 import sabatinoprovenza.BE_S6_L3.services.BlogsService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,7 +24,14 @@ public class BlogsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Blog saveBlog(@RequestBody BlogPayload payload) {
+    public Blog saveBlog(@RequestBody @Validated BlogPayload payload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errorsList = validationResult.getAllErrors().stream()
+                    .map(err -> err.getDefaultMessage())
+                    .toList();
+
+            throw new ValidationException(errorsList);
+        }
         return blogsService.saveBlog(payload);
     }
 

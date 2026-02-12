@@ -19,11 +19,11 @@ public class AuthorsService {
     }
 
     public Author saveAuthor(AuthorPayload payload) {
-        this.authorsRepository.findByEmail(payload.getEmail()).ifPresent(author -> {
+        this.authorsRepository.findByEmail(payload.email()).ifPresent(author -> {
             throw new BadRequestException("L' email: " + author.getEmail() + " è già in uso");
         });
 
-        Author newAuthor = new Author(payload.getNome(), payload.getCognome(), payload.getEmail(), payload.getDataDiNascita());
+        Author newAuthor = new Author(payload.nome(), payload.cognome(), payload.email(), payload.dataDiNascita());
 
         Author savedAuthor = this.authorsRepository.save(newAuthor);
         System.out.println("L'autore con id: " + savedAuthor.getId() + " è stato salvato correttamente!");
