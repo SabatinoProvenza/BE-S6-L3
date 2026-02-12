@@ -47,8 +47,8 @@ public class AuthorsService {
     }
 
     public Author uploadAvatar(MultipartFile file, UUID authorId) {
-        Author author = authorsRepository.findById(authorId)
-                .orElseThrow(() -> new NotFoundException("Autore con id: " + authorId + " non trovato"));
+        Author author = this.findById(authorId);
+
         try {
             Map result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) result.get("secure_url");
